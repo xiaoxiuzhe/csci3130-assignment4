@@ -1,7 +1,7 @@
 /**
  * Represents pendulums exhibiting (approximately) simple harmonic motion
  */
-public class SimplePendulum extends AbstractEarthPendulum {
+public class SimplePendulum extends AbstractPendulum {
 
     private double angularFrequency, periodOfMotion;
 
@@ -34,4 +34,5 @@ public class SimplePendulum extends AbstractEarthPendulum {
     public double getTheta (double t) {
 	return this.getMaxAngularDisplacement () * Math.cos (angularFrequency * t);
     }
+
 }

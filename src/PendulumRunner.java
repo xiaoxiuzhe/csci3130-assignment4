@@ -9,19 +9,32 @@ public class PendulumRunner {
     public static void main (String [] args) {
 	NumberFormat nf = NumberFormat.getInstance ();
 	nf.setMaximumFractionDigits (3);
+	GravityConstant Earth = new GravityConstant(new Earth());	
+	GravityConstant Jupiter = new GravityConstant(new Jupiter());
 
+	
 	double delta = (args.length == 0) ? .1 : Double.parseDouble (args[0]);
 	double sLen = 10, pMass = 10, theta0 = Math.PI/30;
 	RegularPendulum rp = new RegularPendulum (sLen, pMass, theta0, delta);
 	SimplePendulum sp = new SimplePendulum (sLen, pMass, theta0);
 	RegularPendulum rpCoarse = 
 	    new RegularPendulum (sLen, pMass, theta0, .1);
-
+		
+	rp.setConstant(Earth);
+	sp.setConstant(Earth);
+	rpCoarse.setConstant(Earth);
+	
 	// print out difference in displacement in 1 second intervals
 	// for 20 seconds
 	int iterations = (int) (1/delta);
 	System.out.println ("analytical vs. numerical displacement (fine, coarse)");
 	for (int second = 1; second <= 20; second++) {
+	    if(second == 10){
+			rp.setConstant(Jupiter);
+			sp.setConstant(Jupiter);
+			rpCoarse.setConstant(Jupiter);
+	    	System.out.println("Swtich to Jupiter");
+	    }
 	    for (int i = 0; i < iterations; i++) rp.step ();
 	    for (int i = 0; i < 10; i++) rpCoarse.step (); 
 	    System.out.println ("t=" + second + "s: \t" + 
